@@ -44,6 +44,7 @@ def train_model(model, criterion, optimizer, exp_lr_scheduler, num_epochs=25):
                 if torch.cuda.is_available():
                     inputs = inputs.cuda()
                     labels = labels.cuda()
+
                 # Zero the parameter gradients
                 optimizer.zero_grad()
 

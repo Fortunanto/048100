@@ -1,9 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc
+import torch
+import torch.nn as nn
+import pandas as pd
+import os
+from torchvision import transforms
+from PIL import Image
+from torchvision import models
+from tqdm import tqdm
 
 # Read the CSV file
-df = pd.read_csv('fairface_label_val_expanded.csv')
+df = pd.read_csv('fairface_label_val_expanded_fair.csv')
 
 # Mapping dictionary for converting labels to binary format
 label_mapping = {'Female': 0, 'Male': 1}
@@ -59,7 +67,7 @@ plt.subplot(1, 2, 1)
 for idx, race in enumerate(unique_races):
     plt.plot(result_df.loc[result_df['Race'] == race, 'FPR'], result_df.loc[result_df['Race'] == race, 'TPR'],
              color=colors[idx], marker='o', label=f'{labels[idx]} (AUC = {result_df.loc[result_df["Race"] == race, "AUC"].values[0]:.2f})')
-
+plt.savefig('fpr-tpr.png')
 plt.xlabel('False Positive Rate (FPR)')
 plt.ylabel('True Positive Rate (TPR)')
 plt.title('ROC Curve')
@@ -81,4 +89,4 @@ plt.xlim(0, 1)
 plt.ylim(0, 1)
 
 plt.tight_layout()
-plt.show()
+plt.savefig('results.png')
